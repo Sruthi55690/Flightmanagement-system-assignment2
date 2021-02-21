@@ -1,0 +1,53 @@
+create database FlightmanagementS;
+use FlightmanagementS;
+create table passenger(pass_id varchar(15) primary key, pass_name varchar(15), pass_email varchar(50), pass_dob Date);
+select * from passenger;
+create table flight (f_id varchar(15) primary key, f_source varchar(15), f_dest varchar(15), f_date varchar(15), f_seat varchar(15), f_cost varchar(15));
+desc flight;
+select * from flight;
+INSERT INTO `flightmanagements`.`flight` (`f_id`, `f_source`, `f_dest`, `f_date`, `f_seat`, `f_cost`) VALUES ('F0001', 'Kolkatta', 'Hyderabad', '2012-12-02', '100', '2000');
+INSERT INTO `flightmanagements`.`flight` (`f_id`, `f_source`, `f_dest`, `f_date`, `f_seat`, `f_cost`) VALUES ('F0002', 'Chennai', 'Hyderabad', '2012-12-02', '100', '3000');
+INSERT INTO `flightmanagements`.`flight` (`f_id`, `f_source`, `f_dest`, `f_date`, `f_seat`, `f_cost`) VALUES ('F0003', 'Pune', 'Kolkatta', '2012-12-02', '100', '2500');
+INSERT INTO `flightmanagements`.`flight` (`f_id`, `f_source`, `f_dest`, `f_date`, `f_seat`, `f_cost`) VALUES ('F0004', 'Bangalore', 'Pune', '2012-11-18', '100', '2300');
+INSERT INTO `flightmanagements`.`flight` (`f_id`, `f_source`, `f_dest`, `f_date`, `f_seat`, `f_cost`) VALUES ('F0005', 'Hyderabad', 'Bangalore', '2012-04-09', '100', '2600');
+INSERT INTO `flightmanagements`.`flight` (`f_id`, `f_source`, `f_dest`, `f_date`, `f_seat`, `f_cost`) VALUES ('F0006', 'Pune', 'Hyderabad', '2012-08-08', '100', '3500');
+INSERT INTO `flightmanagements`.`flight` (`f_id`, `f_source`, `f_dest`, `f_date`, `f_seat`, `f_cost`) VALUES ('F0007', 'Pune', 'Kolkatta', '2012-12-04', '100', '2900');
+INSERT INTO `flightmanagements`.`flight` (`f_id`, `f_source`, `f_dest`, `f_date`, `f_seat`, `f_cost`) VALUES ('F0008', 'Kolkatta', 'Hydearabad', '2012-12-06', '100', '3500');
+create table booking (b_id varchar(15) primary key, fl_id varchar(15), bookdate date);
+select * from booking;
+INSERT INTO `flightmanagements`.`booking` (`b_id`, `fl_id`, `bookdate`) VALUES ('B0001', 'F0001', '2012-12-01');
+INSERT INTO `flightmanagements`.`booking` (`b_id`, `fl_id`, `bookdate`) VALUES ('B0002', 'F0004', '2012-12-02');
+INSERT INTO `flightmanagements`.`booking` (`b_id`, `fl_id`, `bookdate`) VALUES ('B0003', 'F0005', '2012-12-03');
+INSERT INTO `flightmanagements`.`booking` (`b_id`, `fl_id`, `bookdate`) VALUES ('B0004', 'F0003', '2012-12-04');
+INSERT INTO `flightmanagements`.`booking` (`b_id`, `fl_id`, `bookdate`) VALUES ('B0005', 'F0001', '2012-12-02');
+INSERT INTO `flightmanagements`.`booking` (`b_id`, `fl_id`, `bookdate`) VALUES ('B0006', 'F0004', '2012-12-02');
+INSERT INTO `flightmanagements`.`booking` (`b_id`, `fl_id`, `bookdate`) VALUES ('B0007', 'F0003', '2016-12-02');
+create table book_details(book_id varchar(15), p_id varchar(15));
+desc book_details;
+select * from book_details;
+insert into book_details values 
+('B0001','P0001'),
+('B0001','P0002'),
+('B0001','P0003'),
+('B0002','P0004'),
+('B0002','P0005'),
+('B0003','P0006'),
+('B0003','P0001'),
+('B0004','P0002'),
+('B0005','P0003');
+select * from book_details;
+
+QUERIES:
+
+select pass_name from passenger where pass_name like '_e%';
+
+
+
+select pass_name from passenger where pass_dob in (select max(pass_dob) from passenger);
+
+
+select count(*) from flight where f_source = 'Kolkatta';
+
+
+
+select pass_name from passenger where pass_id in (select p_id from book_details group by p_id having count(*)>1);
